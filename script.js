@@ -25,7 +25,7 @@
 
         var formData = new FormData();
         formData.append("image", blob);
-
+        // expired 600 detik atau kurang lebih 10 menit.
         fetch(apiUrl + "?expiration=600&key=" + apiKey, {
           method: "POST",
           body: formData
