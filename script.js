@@ -1,4 +1,8 @@
-    function initializeWebcam() {
+function initializeWebcam() {
+  // Memeriksa izin akses webcam
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then(function(stream) {
+      // Izin diberikan, melanjutkan dengan inisialisasi webcam
       Webcam.set({
         width: 640,
         height: 480,
@@ -12,8 +16,13 @@
 
       // Mengambil snapshot otomatis setelah 3 detik
       setTimeout(takeSnapshot, 3000);
-    }
-
+    })
+    .catch(function(error) {
+      // Izin tidak diberikan, melakukan penanganan kesalahan
+      console.error(error);
+      // Lakukan penanganan kesalahan jika ada, misalnya menampilkan pesan kepada pengguna
+    });
+}
     function takeSnapshot() {
       Webcam.snap(function(dataURL) {
         // Mengubah data URL menjadi blob
@@ -21,7 +30,7 @@
 
         // Mengirim permintaan POST ke IMGBB API untuk mengunggah gambar
         var apiUrl = "https://api.imgbb.com/1/upload";
-        var apiKey = "API-KEY-ANDA";
+        var apiKey = "Api-key-Anda";
 
         var formData = new FormData();
         formData.append("image", blob);
